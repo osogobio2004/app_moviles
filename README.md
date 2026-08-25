@@ -120,13 +120,7 @@ docker_moviles/
 │       └── database.py
 │
 └── mobile/
-    ├── Dockerfile
-    ├── package.json
-    ├── package-lock.json
-    ├── angular.json
-    ├── ionic.config.json
-    ├── capacitor.config.ts
-    └── src/
+    └── Dockerfile
 ```
 
 ### `database`
