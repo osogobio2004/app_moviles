@@ -1,0 +1,38 @@
+# Node
+node_modules/
+mobile/node_modules/
+npm-debug.log*
+
+# Angular / Ionic
+mobile/www/
+mobile/.angular/
+mobile/.ionic/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Variables y secretos
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Android generado
+mobile/android/
+
+# iOS generado
+mobile/ios/
