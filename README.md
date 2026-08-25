@@ -586,3 +586,11 @@ El objetivo del repositorio es proporcionar un entorno reproducible para desarro
 ```text
 MariaDB -> FastAPI -> Ionic
 ```
+
+## Licencia
+Este proyecto está bajo la licencia MIT. Puedes usarlo y modificarlo libremente.
+
+## Autor
+Creado por **[DSC. Jonathan De La Cruz Alvarez](https://github.com/JonathanDeLaCruz)**
+
+Si tienes dudas o sugerencias, no dudes en abrir un issue o un pull request. ¡Feliz programación! 🚀
