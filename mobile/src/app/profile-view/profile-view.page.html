@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/profile-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle de Perfil</ion-title>
+    <ion-buttons slot="end" *ngIf="profile">
+      <ion-button [routerLink]="['/profile-imagen', profile.proid]" aria-label="Subir o cambiar avatar">
+        <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text color="danger" *ngIf="errorMessage">
+    <p class="ion-padding">{{ errorMessage }}</p>
+  </ion-text>
+
+  <ion-card *ngIf="profile as detail">
+    <div class="avatar-preview" *ngIf="avatarBlobUrl || detail.avatar" style="display: flex; justify-content: center; margin-top: 1.5rem;">
+      <ion-avatar style="width: 120px; height: 120px; border: 3px solid var(--ion-color-primary, #3880ff);">
+        <img [src]="avatarBlobUrl || detail.avatar" alt="Avatar" onerror="this.src='https://ionicframework.com/docs/img/demos/avatar.svg'" />
+      </ion-avatar>
+    </div>
+
+    <ion-card-header>
+      <ion-card-title>
+        👤 {{ detail.nickname }}
+      </ion-card-title>
+      <ion-card-subtitle>
+        Perfil #{{ detail.proid }}
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <p>Fecha de Nacimiento</p>
+            <h2>{{ detail.birthdate | date:'yyyy-MM-dd' }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>ID de Pareja (Couple)</p>
+            <h2>{{ detail.couidfk }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="detail.avatar">
+          <ion-label class="ion-text-wrap">
+            <p>Identificador de Archivo / URL Avatar</p>
+            <h2>{{ detail.avatar }}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer *ngIf="profile as detail">
+  <ion-toolbar>
+    <ion-button fill="solid" expand="block" [routerLink]="['/profile-imagen', detail.proid]" class="ion-margin-bottom">
+      <ion-icon name="camera-outline" slot="start"></ion-icon>
+      Subir / Cambiar foto de avatar
+    </ion-button>
+    <ion-button fill="outline" expand="block" (click)="abrirPagina()">
+      Ver respuesta de la API
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

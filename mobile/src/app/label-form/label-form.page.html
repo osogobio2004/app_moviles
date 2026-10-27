@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEdit ? 'Editar Etiqueta de Recuerdo' : 'Nueva Asignación de Etiqueta' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando información...</p>
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="labelForm" (ngSubmit)="saveLabel()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Fecha de Asignación *</ion-label>
+        <ion-input
+          type="datetime-local"
+          formControlName="assigment_at"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('assigment_at')" class="validation-error">
+        {{ getError('assigment_at') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">ID del Recuerdo (memidfk) *</ion-label>
+        <ion-input
+          type="number"
+          formControlName="memidfk"
+          placeholder="1"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('memidfk')" class="validation-error">
+        {{ getError('memidfk') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">ID de la Etiqueta (tagidfk) *</ion-label>
+        <ion-input
+          type="number"
+          formControlName="tagidfk"
+          placeholder="1"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('tagidfk')" class="validation-error">
+        {{ getError('tagidfk') }}
+      </div>
+    </ion-list>
+
+    <div class="ion-margin-top">
+      <ion-button expand="block" type="submit" [disabled]="saving">
+        <ion-spinner *ngIf="saving" name="crescent" slot="start"></ion-spinner>
+        {{ isEdit ? 'Actualizar Asignación' : 'Vincular Etiqueta' }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

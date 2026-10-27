@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEdit ? 'Editar Estado' : 'Nuevo Estado' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando información del estado...</p>
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="statusForm" (ngSubmit)="saveStatus()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Descripción del Estado *</ion-label>
+        <ion-select formControlName="description">
+          <ion-select-option value="PENDIENTE">PENDIENTE</ion-select-option>
+          <ion-select-option value="EN PROGRESO">EN PROGRESO</ion-select-option>
+          <ion-select-option value="COMPLETADO">COMPLETADO</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="getError('description')" class="validation-error">
+        {{ getError('description') }}
+      </div>
+    </ion-list>
+
+    <div class="ion-margin-top">
+      <ion-button expand="block" type="submit" [disabled]="saving">
+        <ion-spinner *ngIf="saving" name="crescent" slot="start"></ion-spinner>
+        {{ isEdit ? 'Actualizar Estado' : 'Guardar Estado' }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

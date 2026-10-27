@@ -1,0 +1,47 @@
+<app-toolbar nombre="Ubicaciones"></app-toolbar>
+
+<ion-content>
+  <div class="ion-text-end ion-padding-end ion-margin-top">
+    <ion-button color="primary" (click)="newLocation()">
+      <ion-icon name="add" slot="start"></ion-icon>
+      Nueva Ubicación
+    </ion-button>
+  </div>
+
+    <ion-searchbar [value]="busqueda" [debounce]="300" (ionInput)="handleInput($event)" placeholder="Buscar ubicaciones" aria-label="Buscar ubicaciones"></ion-searchbar>
+  <p class="ion-padding" *ngIf="total === 0">No se encontraron ubicaciones.</p>
+  <ion-list>
+    <ion-item-sliding *ngFor="let loc of locations">
+      <ion-item>
+        <ion-icon name="location-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h2>{{ loc.place_name }}</h2>
+          <p>Viaje ID: {{ loc.jouidfk }} <span *ngIf="loc.latitude">| Lat: {{ loc.latitude }} Long: {{ loc.longitude }}</span></p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="warning" (click)="editLocation(loc.locid)">
+          <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="primary" [routerLink]="['/location-view', loc.locid]">
+          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="confirmarEliminar(loc.locid, loc.place_name)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item *ngIf="locations.length === 0">
+      <ion-label class="ion-text-center">No hay lugares registrados.</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <app-paginacion
+    [total]="total"
+    [porPagina]="porPagina"
+    [paginaActual]="paginaActual"
+    (paginaCambio)="cambiarPagina($event)"
+  ></app-paginacion>
+</ion-content>

@@ -1,24 +1,27 @@
-from decimal import Decimal
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict
 
-from pydantic import BaseModel
-from pydantic import ConfigDict
+class MissionBase(BaseModel):
+    title: str
+    details: str | None = None
+    deadline: datetime
+    couidfk: int
+    catidfk: int
+    staidfk: int
 
-
-class ProductoBase(BaseModel):
-
-    nombre: str
-    descripcion: str | None = None
-    precio: Decimal
-    stock: int = 0
-
-
-class ProductoCrear(ProductoBase):
+class MissionCreate(MissionBase):
     pass
 
+class MissionUpdate(BaseModel):
+    title: str | None = None
+    details: str | None = None
+    deadline: datetime | None = None
+    couidfk: int | None = None
+    catidfk: int | None = None
+    staidfk: int | None = None
 
-class ProductoRespuesta(ProductoBase):
-
-    id: int
+class MissionResponse(MissionBase):
+    misid: int
 
     model_config = ConfigDict(
         from_attributes=True

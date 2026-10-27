@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        Cancel
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      {{ isEdit ? 'Edit Mission' : 'New Mission' }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner></ion-spinner>
+    <p>Loading mission...</p>
+  </div>
+
+  <form *ngIf="missionForm && !loading" [formGroup]="missionForm" (ngSubmit)="saveMission()">
+    <ion-list>
+      <ion-item>
+        <ion-input label="Title" labelPlacement="stacked" type="text" formControlName="title" maxlength="45"></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('title') as error">
+        {{ error }}
+      </ion-note>
+
+      <ion-item>
+        <ion-textarea label="Details" labelPlacement="stacked" formControlName="details" autoGrow="true"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Deadline" labelPlacement="stacked" type="datetime-local" formControlName="deadline"></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('deadline') as error">
+        {{ error }}
+      </ion-note>
+
+      <ion-item>
+        <ion-input label="Category ID" labelPlacement="stacked" type="number" formControlName="catidfk" min="1"></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('catidfk') as error">
+        {{ error }}
+      </ion-note>
+
+      <ion-item>
+        <ion-input label="Status ID" labelPlacement="stacked" type="number" formControlName="staidfk" min="1"></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('staidfk') as error">
+        {{ error }}
+      </ion-note>
+
+      <ion-item>
+        <ion-input label="Couple ID" labelPlacement="stacked" type="number" formControlName="couidfk" min="1"></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('couidfk') as error">
+        {{ error }}
+      </ion-note>
+    </ion-list>
+
+    <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="saving || loading">
+      {{ saving ? 'Saving...' : (isEdit ? 'Update' : 'Save') }}
+    </ion-button>
+  </form>
+</ion-content>

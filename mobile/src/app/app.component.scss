@@ -1,0 +1,56 @@
+/* 1. Registrar las variantes de la fuente Lato */
+@font-face {
+  font-family: 'Lato';
+  src: url('/assets/font/Lato-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/assets/font/Lato-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Opcional: Young Serif para títulos o usos específicos */
+@font-face {
+  font-family: 'Young Serif';
+  src: url('/assets/font/YoungSerif-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 2. Establecer 'Lato' como la fuente principal de toda la aplicación */
+:root {
+  --ion-font-family: 'Lato', sans-serif;
+  --ion-color-personalizado: #686090;
+  --ion-color-personalizado-rgb: 104, 96, 144;
+  --ion-color-personalizado-contrast: #ffffff;
+  --ion-color-personalizado-contrast-rgb: 255, 255, 255;
+  --ion-color-personalizado-shade: #5c547f;
+  --ion-color-personalizado-tint: #77709b;
+}
+
+/* 3. Clase para vincular el color personalizado de Ionic */
+.ion-color-personalizado {
+  --ion-color-base: var(--ion-color-personalizado);
+  --ion-color-base-rgb: var(--ion-color-personalizado-rgb);
+  --ion-color-contrast: var(--ion-color-personalizado-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-personalizado-contrast-rgb);
+  --ion-color-shade: var(--ion-color-personalizado-shade);
+  --ion-color-tint: var(--ion-color-personalizado-tint);
+}
+
+.boton-producto {
+  --border-radius: 12px;
+  font-weight: bold;
+}
+
+ion-menu {
+  --width: 260px;
+}
+

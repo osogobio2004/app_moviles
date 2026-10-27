@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/step-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle de Paso</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text color="danger" *ngIf="errorMessage">
+    <p class="ion-padding">{{ errorMessage }}</p>
+  </ion-text>
+
+  <ion-card *ngIf="step as detail">
+    <ion-card-header>
+      <ion-card-title>
+        Paso #{{ detail.order_num }}
+      </ion-card-title>
+      <ion-card-subtitle>
+        Estado: {{ detail.is_done ? 'Completado ✅' : 'Pendiente ⏳' }}
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item class="ion-text-wrap">
+          <ion-label>
+            <p>Instrucción</p>
+            <h2>{{ detail.instruction }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>Número de Orden</p>
+            <h2>{{ detail.order_num }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>ID Misión Asociada</p>
+            <h2>{{ detail.misidfk }}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/journey-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle del Viaje</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text color="danger" *ngIf="errorMessage">
+    <p class="ion-padding">{{ errorMessage }}</p>
+  </ion-text>
+
+  <ion-card *ngIf="journey as detail">
+    <ion-card-header>
+      <ion-card-title>{{ detail.destination }}</ion-card-title>
+      <ion-card-subtitle>Viaje #{{ detail.jouid }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+            <p>Presupuesto Estimado</p>
+            <h2>${{ detail.budget | number:'1.2-2' }} MXN</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>Fecha Planeada</p>
+            <h2>{{ detail.planned_day | date:'yyyy-MM-dd' }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="detail.visited_at">
+          <ion-label>
+            <p>Fecha de Visita Realizada</p>
+            <h2>{{ detail.visited_at | date:'yyyy-MM-dd HH:mm' }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>Estado</p>
+            <h2>{{ getStatusDescription(detail.staidfk) }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>ID de Pareja</p>
+            <h2>{{ detail.couidfk }}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

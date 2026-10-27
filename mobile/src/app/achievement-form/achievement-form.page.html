@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEdit ? 'Editar Logro' : 'Nuevo Logro' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando información del logro...</p>
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="achievementForm" (ngSubmit)="saveAchievement()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Nombre del Logro *</ion-label>
+        <ion-input
+          type="text"
+          formControlName="name"
+          placeholder="Ej. Explorador Novato"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('name')" class="validation-error">
+        {{ getError('name') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">Bono de Experiencia (XP) *</ion-label>
+        <ion-input
+          type="number"
+          formControlName="xp_bonus"
+          placeholder="Ej. 100"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('xp_bonus')" class="validation-error">
+        {{ getError('xp_bonus') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">Criterio (Formato JSON) *</ion-label>
+        <ion-textarea
+          rows="5"
+          formControlName="criteria"
+          placeholder='{"condition": "complete_missions", "count": 5}'
+        ></ion-textarea>
+      </ion-item>
+      <div *ngIf="getError('criteria')" class="validation-error">
+        {{ getError('criteria') }}
+      </div>
+    </ion-list>
+
+    <div class="ion-margin-top">
+      <ion-button expand="block" type="submit" [disabled]="saving">
+        <ion-spinner *ngIf="saving" name="crescent" slot="start"></ion-spinner>
+        {{ isEdit ? 'Actualizar Logro' : 'Guardar Logro' }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

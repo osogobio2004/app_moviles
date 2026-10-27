@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        Cancelar
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      {{ isEdit ? 'Editar Viaje' : 'Nuevo Viaje' }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner></ion-spinner>
+    <p>Cargando información del viaje...</p>
+  </div>
+
+  <form *ngIf="journeyForm && !loading" [formGroup]="journeyForm" (ngSubmit)="saveJourney()">
+    <ion-list>
+      <ion-item>
+        <ion-input
+          label="Destino"
+          labelPlacement="stacked"
+          type="text"
+          formControlName="destination"
+          maxlength="255"
+          placeholder="Ej. Playa del Carmen, Cancún"
+        ></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('destination') as error">
+        {{ error }}
+      </ion-note>
+
+      <ion-item>
+        <ion-input
+          label="Presupuesto ($)"
+          labelPlacement="stacked"
+          type="number"
+          step="0.01"
+          formControlName="budget"
+          min="0"
+          placeholder="Ej. 5000.00"
+        ></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('budget') as error">
+        {{ error }}
+      </ion-note>
+
+      <ion-item>
+        <ion-input
+          label="Fecha planeada"
+          labelPlacement="stacked"
+          type="date"
+          formControlName="planned_day"
+        ></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('planned_day') as error">
+        {{ error }}
+      </ion-note>
+
+      <ion-item>
+        <ion-input
+          label="Fecha de visita (Opcional)"
+          labelPlacement="stacked"
+          type="datetime-local"
+          formControlName="visited_at"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          label="ID de Estado"
+          labelPlacement="stacked"
+          type="number"
+          formControlName="staidfk"
+          min="1"
+        ></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('staidfk') as error">
+        {{ error }}
+      </ion-note>
+
+      <ion-item>
+        <ion-input
+          label="ID de Pareja"
+          labelPlacement="stacked"
+          type="number"
+          formControlName="couidfk"
+          min="1"
+        ></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('couidfk') as error">
+        {{ error }}
+      </ion-note>
+    </ion-list>
+
+    <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="saving || loading">
+      {{ saving ? 'Guardando...' : (isEdit ? 'Actualizar Viaje' : 'Guardar Viaje') }}
+    </ion-button>
+  </form>
+</ion-content>

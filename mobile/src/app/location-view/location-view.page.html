@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/location-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle de Ubicación</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text color="danger" *ngIf="errorMessage">
+    <p class="ion-padding">{{ errorMessage }}</p>
+  </ion-text>
+
+  <ion-card *ngIf="location as detail">
+    <ion-card-header>
+      <ion-card-title>
+        📍 {{ detail.place_name }}
+      </ion-card-title>
+      <ion-card-subtitle>
+        ID de Lugar #{{ detail.locid }}
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <p>ID Ubicación</p>
+            <h2>#{{ detail.locid }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>Nombre del Lugar</p>
+            <h2>{{ detail.place_name }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="detail.latitude !== null && detail.latitude !== undefined">
+          <ion-label>
+            <p>Latitud</p>
+            <h2>{{ detail.latitude }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="detail.longitude !== null && detail.longitude !== undefined">
+          <ion-label>
+            <p>Longitud</p>
+            <h2>{{ detail.longitude }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>ID Viaje Asociado</p>
+            <h2>{{ detail.jouidfk }}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,55 @@
+<app-toolbar nombre="Imágenes de Recuerdos"></app-toolbar>
+
+<ion-content>
+  <div class="ion-text-end ion-padding-end ion-margin-top">
+    <ion-button color="primary" (click)="newImage()">
+      <ion-icon name="add" slot="start"></ion-icon>
+      Nueva Imagen
+    </ion-button>
+  </div>
+
+    <ion-searchbar [value]="busqueda" [debounce]="300" (ionInput)="handleInput($event)" placeholder="Buscar imágenes" aria-label="Buscar imágenes"></ion-searchbar>
+  <p class="ion-padding" *ngIf="total === 0">No se encontraron imágenes.</p>
+  <ion-list>
+    <ion-item-sliding *ngFor="let img of images">
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img [src]="img.url" alt="Foto" onerror="this.src='https://ionicframework.com/docs/img/demos/thumbnail.svg'" />
+        </ion-thumbnail>
+        <ion-label>
+          <h2>Recuerdo #{{ img.memidfk }}</h2>
+          <p>Fecha: {{ (img.date | date:'yyyy-MM-dd') || 'Sin fecha' }} | ID: #{{ img.imaid }}</p>
+        </ion-label>
+        <ion-button fill="clear" color="secondary" slot="end" [routerLink]="['/images-imagen', img.imaid]" aria-label="Subir o cambiar imagen">
+          <ion-icon slot="icon-only" name="image"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="secondary" [routerLink]="['/images-imagen', img.imaid]">
+          <ion-icon slot="icon-only" name="image-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="warning" (click)="editImage(img.imaid)">
+          <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="primary" [routerLink]="['/images-view', img.imaid]">
+          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="confirmarEliminar(img.imaid)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item *ngIf="images.length === 0">
+      <ion-label class="ion-text-center">No hay imágenes registradas.</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <app-paginacion
+    [total]="total"
+    [porPagina]="porPagina"
+    [paginaActual]="paginaActual"
+    (paginaCambio)="cambiarPagina($event)"
+  ></app-paginacion>
+</ion-content>

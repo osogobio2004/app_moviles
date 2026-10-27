@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEdit ? 'Editar Pareja' : 'Nueva Pareja' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando información de la pareja...</p>
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="coupleForm" (ngSubmit)="saveCouple()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Fecha de Inicio de Relación *</ion-label>
+        <ion-input
+          type="date"
+          formControlName="start_date"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('start_date')" class="validation-error">
+        {{ getError('start_date') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">Total de Puntos de Experiencia (XP) *</ion-label>
+        <ion-input
+          type="number"
+          formControlName="total_xp"
+          placeholder="0"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('total_xp')" class="validation-error">
+        {{ getError('total_xp') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">Última Interacción *</ion-label>
+        <ion-input
+          type="datetime-local"
+          formControlName="last_interaction"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('last_interaction')" class="validation-error">
+        {{ getError('last_interaction') }}
+      </div>
+    </ion-list>
+
+    <div class="ion-margin-top">
+      <ion-button expand="block" type="submit" [disabled]="saving">
+        <ion-spinner *ngIf="saving" name="crescent" slot="start"></ion-spinner>
+        {{ isEdit ? 'Actualizar Pareja' : 'Guardar Pareja' }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

@@ -1,0 +1,190 @@
+================================================================================
+GUIA DE RUTAS, PANTALLAS Y SERVICIOS - PROYECTO DOCKER MOVILES
+================================================================================
+
+1. SERVICIOS Y ENLACES EN EL NAVEGADOR
+--------------------------------------------------------------------------------
+* Aplicacion Movil (Ionic + Angular):
+  http://localhost:8100
+
+* Panel de Administracion de Directus (Headless CMS):
+  http://localhost:8000/admin
+  - Correo Admin:     admin@moviles.com
+  - Password Admin:   admin123
+  (Aqui puedes configurar colecciones, ver los datos y asignar permisos publicos).
+
+* API REST Directus (Endpoints por Coleccion):
+  http://localhost:8000/items/<nombre_tabla>
+  Ejemplo: http://localhost:8000/items/mission
+
+* Documentacion OpenAPI / Swagger UI:
+  http://localhost:8081
+
+* Administrador Grafico de Base de Datos (CloudBeaver):
+  http://localhost:8978
+  - Servidor / Host:  db
+  - Puerto:           3306
+  - Base de Datos:    moviles
+  - Usuario:          moviles
+  - Password:         moviles123
+
+
+2. RUTAS DE NAVEGACION DE LA APP MOVIL (http://localhost:8100)
+--------------------------------------------------------------------------------
+[AUTENTICACION Y CUENTAS]
+* Iniciar Sesion: http://localhost:8100/login
+* Crear Cuenta:   http://localhost:8100/registro
+
+[TABLAS PRINCIPALES EN TABS]
+* Misiones:
+  - Tab:        http://localhost:8100/tabs/misiones
+  - Listado:    http://localhost:8100/mission-list
+  - Detalle:    http://localhost:8100/mission-view/:id
+
+* Viajes:
+  - Tab:        http://localhost:8100/tabs/viajes
+  - Listado:    http://localhost:8100/journey-list
+  - Detalle:    http://localhost:8100/journey-view/:id
+
+* Recuerdos:
+  - Tab:        http://localhost:8100/tabs/recuerdos
+  - Listado:    http://localhost:8100/memory-list
+  - Detalle:    http://localhost:8100/memory-view/:id
+
+[TODAS LAS TABLAS DEL SISTEMA CON CRUD COMPLETO]
+* Recompensas (reward):
+  - Listado:    http://localhost:8100/reward-list
+  - Detalle:    http://localhost:8100/reward-view/:id
+
+* Logros (achievement):
+  - Listado:    http://localhost:8100/achievement-list
+  - Detalle:    http://localhost:8100/achievement-view/:id
+
+* Perfiles (profile):
+  - Listado:      http://localhost:8100/profile-list
+  - Detalle:      http://localhost:8100/profile-view/:id
+  - Subir Avatar: http://localhost:8100/profile-imagen/:id
+
+* Categorias (category):
+  - Listado:    http://localhost:8100/category-list
+  - Detalle:    http://localhost:8100/category-view/:id
+
+* Estados (status):
+  - Listado:    http://localhost:8100/status-list
+  - Detalle:    http://localhost:8100/status-view/:id
+
+* Parejas (couple):
+  - Listado:    http://localhost:8100/couple-list
+  - Detalle:    http://localhost:8100/couple-view/:id
+
+* Rangos (rank):
+  - Listado:    http://localhost:8100/rank-list
+  - Detalle:    http://localhost:8100/rank-view/:id
+
+* Etiquetas (tag):
+  - Listado:    http://localhost:8100/tag-list
+  - Detalle:    http://localhost:8100/tag-view/:id
+
+* Pasos de Mision (step):
+  - Listado:    http://localhost:8100/step-list
+  - Detalle:    http://localhost:8100/step-view/:id
+
+* Ubicaciones de Viaje (location):
+  - Listado:    http://localhost:8100/location-list
+  - Detalle:    http://localhost:8100/location-view/:id
+
+* Asignaciones de Etiquetas a Recuerdos (label):
+  - Listado:    http://localhost:8100/label-list
+  - Detalle:    http://localhost:8100/label-view/:id
+
+* Desbloqueos de Logros (unlock):
+  - Listado:    http://localhost:8100/unlock-list
+  - Detalle:    http://localhost:8100/unlock-view/:id
+
+* Inventario de Recompensas (inventory):
+  - Listado:    http://localhost:8100/inventory-list
+  - Detalle:    http://localhost:8100/inventory-view/:id
+
+* Tokens de Acceso y Pareja (token):
+  - Listado:    http://localhost:8100/token-list
+  - Detalle:    http://localhost:8100/token-view/:id
+
+* Imagenes de Recuerdos (images):
+  - Listado:      http://localhost:8100/images-list
+  - Detalle:      http://localhost:8100/images-view/:id
+  - Subir Imagen: http://localhost:8100/images-imagen/:id
+
+[TABS PRINCIPALES (MANUAL 18 Y 19)]
+* Productos:
+  - Listado:      http://localhost:8100/tabs/productos
+  - Formulario:   http://localhost:8100/tabs/productos/formulario
+  - Edición:      http://localhost:8100/tabs/productos/formulario/:id
+  - Detalle:      http://localhost:8100/tabs/productos/detalle/:id
+  - Subir Imagen: http://localhost:8100/tabs/productos/imagen/:id
+
+* Pedidos (Maestro - Detalle con varios renglones):
+  - Listado:      http://localhost:8100/tabs/pedidos
+  - Formulario:   http://localhost:8100/tabs/pedidos/formulario
+  - Edición:      http://localhost:8100/tabs/pedidos/formulario/:id
+  - Detalle:      http://localhost:8100/tabs/pedidos/detalle/:id
+
+* Resumen (Dashboard de métricas e indicadores):
+  - Tab Resumen:  http://localhost:8100/tabs/resumen
+
+[CATÁLOGOS GENÉRICOS Y EJEMPLOS (MANUAL 17 Y 18)]
+* Categorías:
+  - Listado:      http://localhost:8100/tabs/catalogos/categorias
+  - Formulario:   http://localhost:8100/tabs/catalogos/categorias/formulario
+  - Detalle:      http://localhost:8100/tabs/catalogos/categorias/detalle/:id
+
+* Marcas:
+  - Listado:      http://localhost:8100/tabs/catalogos/marcas
+  - Formulario:   http://localhost:8100/tabs/catalogos/marcas/formulario
+  - Detalle:      http://localhost:8100/tabs/catalogos/marcas/detalle/:id
+
+* Proveedores:
+  - Listado:      http://localhost:8100/tabs/catalogos/proveedores
+  - Formulario:   http://localhost:8100/tabs/catalogos/proveedores/formulario
+  - Detalle:      http://localhost:8100/tabs/catalogos/proveedores/detalle/:id
+
+* Clientes:
+  - Listado:      http://localhost:8100/tabs/catalogos/clientes
+  - Formulario:   http://localhost:8100/tabs/catalogos/clientes/formulario
+  - Detalle:      http://localhost:8100/tabs/catalogos/clientes/detalle/:id
+
+* Orígenes de Ejemplo:
+  - Listado:      http://localhost:8100/tabs/catalogos/origenes-ejemplo
+  - Formulario:   http://localhost:8100/tabs/catalogos/origenes-ejemplo/formulario
+  - Detalle:      http://localhost:8100/tabs/catalogos/origenes-ejemplo/detalle/:id
+
+* Ejemplos de Campos (21 Controles):
+  - En Catálogo:  http://localhost:8100/tabs/catalogos/ejemplos-campos
+  - Página Form:  http://localhost:8100/ejemplos-campos
+
+
+3. CARACTERISTICAS DE CADA MODULO CRUD
+--------------------------------------------------------------------------------
+En cada modulo se implementaron al 100% las tecnicas de los manuales docentes:
+1. Listado paginado con sort descendente por ID.
+2. Componente reutilizable ToolbarComponent con titulo de la tabla.
+3. Componente reutilizable PaginacionComponent con calculo reactivo de paginas.
+4. Conteo dinamico consumiendo endpoint aggregate[count]=* de Directus.
+5. Boton "Nuevo" que despliega un modal con formulario reactivo y validaciones.
+6. Boton editar (lapiz amarillo) reutilizando el mismo modal con carga patchValue.
+7. Boton ver (ojo azul) navegando a <tabla>-view/:id con LoadingController.
+8. Boton eliminar (basura roja) con confirmacion destructiva via AlertController.
+9. Actualizacion automatica del listado tras crear, editar o eliminar.
+10. Strict adherence a NgModule (standalone: false) compatible con Angular 20 e Ionic 8.
+11. Menu lateral responsivo (ion-menu) en AppComponent con enlaces a todas las 18 tablas y pestañas.
+12. Barra de busqueda reactiva con debounce (Manual 10) integrada en todas las 18 tablas utilizables.
+13. Servicios Angular centralizados (Manual 11) con RxJS (defer, map, firstValueFrom) para las 18 entidades (listado, detalle, crear, actualizar, eliminar, total).
+14. Autenticación y Registro con Directus (Manual 12): AuthService con tokens JWT, interceptor de Axios (Bearer), páginas /login y /registro.
+15. Guardia de Autenticacion (Manual 13): authGuard (CanActivateFn) protegiendo todas las rutas privadas con redireccion automatica a /login?returnUrl=..., y botones para cerrar sesion en la barra de herramientas y el menu.
+16. Relacion Muchos a Muchos (Manual 14): Implementacion del patron M:N adaptado a Recuerdos (memory) y Etiquetas (tag) mediante Asignaciones (label). Manejo de FormArray dinamico con botones [+] y papelera para agregar y quitar etiquetas, sincronizacion inteligente con Directus API ({ create: [...], delete: [...] }), y visualizacion con chips en el detalle (memory-view).
+17. Subir Archivos e Imagenes (Manual 15): Paginas dedicadas /images-imagen/:id y /profile-imagen/:id para cargar archivos multipart con FormData hacia /files de Directus, asociar el UUID del archivo al registro (images.url y profile.avatar), recuperar la imagen autenticada con blob (URL.createObjectURL) y mostrar previsualizaciones en listados, vistas y pagina de carga.
+18. Imagen en Formulario de Creacion, Actualizacion y Detalle (Manual 16): Integracion directa del servicio ImagenesService (subir con FormData y obtener con Blob autenticado) en los modales de creacion/edicion (images-form y profile-form) y vistas de detalle (images-view y profile-view). Selector de archivo con vista previa en tiempo real antes de guardar, conservacion inteligente de la imagen existente al editar si no se sube una nueva, subida y asociacion automatica al guardar el formulario, y destruccion controlada de URLs de blob (URL.revokeObjectURL).
+19. Campos Diversos de Formulario (Manual 17): Implementación completa de 21 tipos de controles de interfaz (ion-input para text, email, tel, url, number, date, time; ion-textarea autogrow; ion-select con popover y selección múltiple; ion-radio-group; ion-checkbox para casillas y aceptación de términos; ion-toggle; ion-range slider con snaps y pin). Persistencia en `ejemplos_campos` con validación estricta, llaves foráneas a catálogo `origenes_ejemplo` ('app_ionic'), estados en ENUM nativo, campos JSON automáticos y panel accordion interactivo para comparar JSON enviado contra registro recuperado.
+20. Tabs de Navegación, Catálogos Dinámicos y Resumen de Indicadores (Manual 18): Estructura de pestañas inferiores ion-tabs con 3 secciones maestras (Productos, Pedidos, Resumen). Arquitectura de catálogos configurables mediante `colecciones.config.ts`, `rutas-coleccion.ts` y servicio genérico `ColeccionesService` con pantallas compartidas (`colecciones-list`, `colecciones-view`, `colecciones-form`) para Marcas, Proveedores, Clientes, Categorías y Orígenes. Protección relacional contra borrado en cascada indebido (`RESTRICT`) con alerta informativa y comprobación previa de referencias. Dashboard `resumen.page` con cálculo reactivo de métricas de stock y barras de progreso por estado de pedidos vía `aggregate[count]`, `aggregate[sum]` y `groupBy[]`.
+21. Pedidos Maestro-Detalle con Múltiples Productos (Manual 19): Pantallas dedicadas `pedidos-list`, `pedidos-form` y `pedidos-view` para gestión de pedidos con renglones dinámicos (`pedidos_detalle`) usando FormArray. Operaciones anidadas atómicas (POST con array de detalles en creación; PATCH con { create, update, delete } en edición). Aritmética de alta precisión monetaria basada en centavos enteros (`centavos()`, `importe()`, `dinero()`) para evitar errores de redondeo de punto flotante en subtotales y totales. Copia inmutable del precio unitario del producto al momento de crear el pedido.
+================================================================================
+

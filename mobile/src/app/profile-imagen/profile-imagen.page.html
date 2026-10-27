@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/profile-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Subir avatar de perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <p><strong>Perfil #{{ idProfile }}</strong></p>
+  
+  <ion-item lines="none" class="file-selector-item">
+    <ion-label position="stacked">Selecciona una imagen de avatar desde tu dispositivo:</ion-label>
+    <input id="archivo" type="file" accept="image/*" (change)="onFileSelected($event)">
+  </ion-item>
+
+  <ion-button fill="solid" expand="block" (click)="subir()" [disabled]="!archivo || enviando" class="ion-margin-top">
+    <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
+    {{ enviando ? 'Subiendo avatar...' : 'Subir imagen de avatar' }}
+  </ion-button>
+
+  <ion-text [color]="mensaje.includes('correctamente') ? 'success' : 'danger'" *ngIf="mensaje">
+    <p role="status" class="ion-margin-top">{{ mensaje }}</p>
+  </ion-text>
+
+  <div *ngIf="imagenUrl" class="preview-container ion-margin-top">
+    <p><strong>Vista previa del avatar actual:</strong></p>
+    <div class="avatar-wrapper">
+      <img [src]="imagenUrl" alt="Avatar guardado del perfil" class="preview-avatar">
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,30 @@
+.validation-error {
+  color: var(--ion-color-danger);
+  font-size: 0.85rem;
+  padding: 4px 16px 0 16px;
+}
+
+.avatar-picker-section {
+  padding: 8px 16px;
+  background: var(--ion-color-step-50, #f8f9fa);
+  border-radius: 8px;
+}
+
+.avatar-preview-box {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0 8px 0;
+}
+
+.avatar-preview {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--ion-color-primary, #3880ff);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+input[type="file"] {
+  max-width: 100%;
+}

@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEdit ? 'Editar Ubicación' : 'Nueva Ubicación' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando información del lugar...</p>
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="locationForm" (ngSubmit)="saveLocation()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Nombre del Lugar *</ion-label>
+        <ion-input
+          type="text"
+          formControlName="place_name"
+          placeholder="Ej. Mirador del Sol"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('place_name')" class="validation-error">
+        {{ getError('place_name') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">Latitud</ion-label>
+        <ion-input
+          type="number"
+          step="0.000001"
+          formControlName="latitude"
+          placeholder="Ej. 19.432608"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Longitud</ion-label>
+        <ion-input
+          type="number"
+          step="0.000001"
+          formControlName="longitude"
+          placeholder="Ej. -99.133209"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">ID del Viaje Asociado (jouidfk) *</ion-label>
+        <ion-input
+          type="number"
+          formControlName="jouidfk"
+          placeholder="1"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('jouidfk')" class="validation-error">
+        {{ getError('jouidfk') }}
+      </div>
+    </ion-list>
+
+    <div class="ion-margin-top">
+      <ion-button expand="block" type="submit" [disabled]="saving">
+        <ion-spinner *ngIf="saving" name="crescent" slot="start"></ion-spinner>
+        {{ isEdit ? 'Actualizar Ubicación' : 'Guardar Ubicación' }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        Cancelar
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      {{ isEdit ? 'Editar Recompensa' : 'Nueva Recompensa' }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner></ion-spinner>
+    <p>Cargando información de la recompensa...</p>
+  </div>
+
+  <form *ngIf="rewardForm && !loading" [formGroup]="rewardForm" (ngSubmit)="saveReward()">
+    <ion-list>
+      <ion-item>
+        <ion-input
+          label="Nombre del Ítem"
+          labelPlacement="stacked"
+          type="text"
+          formControlName="item_name"
+          maxlength="45"
+          placeholder="Ej. Marco Dorado, Tema Romántico"
+        ></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('item_name') as error">
+        {{ error }}
+      </ion-note>
+
+      <ion-item>
+        <ion-select
+          label="Tipo de Recompensa"
+          labelPlacement="stacked"
+          formControlName="item_type"
+        >
+          <ion-select-option value="frame">Marco de Foto (Frame)</ion-select-option>
+          <ion-select-option value="theme">Tema Visual (Theme)</ion-select-option>
+          <ion-select-option value="badge">Insignia (Badge)</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          label="Costo en XP"
+          labelPlacement="stacked"
+          type="number"
+          formControlName="cost_xp"
+          min="0"
+        ></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('cost_xp') as error">
+        {{ error }}
+      </ion-note>
+
+      <ion-item>
+        <ion-input
+          label="ID de Rango Mínimo"
+          labelPlacement="stacked"
+          type="number"
+          formControlName="rank_ranid"
+          min="1"
+        ></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('rank_ranid') as error">
+        {{ error }}
+      </ion-note>
+    </ion-list>
+
+    <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="saving || loading">
+      {{ saving ? 'Guardando...' : (isEdit ? 'Actualizar Recompensa' : 'Guardar Recompensa') }}
+    </ion-button>
+  </form>
+</ion-content>

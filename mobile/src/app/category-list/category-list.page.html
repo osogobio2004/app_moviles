@@ -1,0 +1,50 @@
+<app-toolbar nombre="Categorías"></app-toolbar>
+
+<ion-content>
+  <div class="ion-text-end ion-padding-end ion-margin-top">
+    <ion-button color="primary" (click)="newCategory()">
+      <ion-icon name="add" slot="start"></ion-icon>
+      Nueva Categoría
+    </ion-button>
+  </div>
+
+    <ion-searchbar [value]="busqueda" [debounce]="300" (ionInput)="handleInput($event)" placeholder="Buscar categorías" aria-label="Buscar categorías"></ion-searchbar>
+  <p class="ion-padding" *ngIf="total === 0">No se encontraron categorías.</p>
+  <ion-list>
+    <ion-item-sliding *ngFor="let cat of categories">
+      <ion-item>
+        <div slot="start" class="color-dot" [style.background-color]="cat.color_hex"></div>
+        <ion-label>
+          <h2>{{ cat.name }}</h2>
+          <p>Color: {{ cat.color_hex }} | Base: +{{ cat.xp_value }} XP | {{ cat.is_active ? 'Activa' : 'Inactiva' }}</p>
+        </ion-label>
+        <ion-badge slot="end" [color]="cat.is_active ? 'success' : 'medium'">
+          {{ cat.is_active ? 'Activa' : 'Inactiva' }}
+        </ion-badge>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="warning" (click)="editCategory(cat.catid)">
+          <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="primary" [routerLink]="['/category-view', cat.catid]">
+          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="confirmarEliminar(cat.catid, cat.name)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item *ngIf="categories.length === 0">
+      <ion-label class="ion-text-center">No hay categorías registradas.</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <app-paginacion
+    [total]="total"
+    [porPagina]="porPagina"
+    [paginaActual]="paginaActual"
+    (paginaCambio)="cambiarPagina($event)"
+  ></app-paginacion>
+</ion-content>

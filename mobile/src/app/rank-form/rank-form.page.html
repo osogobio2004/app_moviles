@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEdit ? 'Editar Rango' : 'Nuevo Rango' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando información del rango...</p>
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="rankForm" (ngSubmit)="saveRank()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Título del Rango *</ion-label>
+        <ion-input
+          type="text"
+          formControlName="title"
+          placeholder="Ej. Pareja Diamante"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('title')" class="validation-error">
+        {{ getError('title') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">Mínimo de XP Requerido *</ion-label>
+        <ion-input
+          type="number"
+          formControlName="min_xp"
+          placeholder="Ej. 1000"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('min_xp')" class="validation-error">
+        {{ getError('min_xp') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">Ícono o Insignia (Texto o URL)</ion-label>
+        <ion-input
+          type="text"
+          formControlName="badge_icon"
+          placeholder="Ej. 💎 o diamond"
+        ></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <div class="ion-margin-top">
+      <ion-button expand="block" type="submit" [disabled]="saving">
+        <ion-spinner *ngIf="saving" name="crescent" slot="start"></ion-spinner>
+        {{ isEdit ? 'Actualizar Rango' : 'Guardar Rango' }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

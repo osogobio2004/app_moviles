@@ -1,0 +1,39 @@
+<ion-app>
+  <ion-menu contentId="main" menuId="principal">
+    <ion-header>
+      <ion-toolbar color="personalizado"><ion-title>Menú</ion-title></ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle *ngFor="let enlace of enlaces" autoHide="false">
+          <ion-item [routerLink]="enlace.ruta" routerDirection="root" button detail="false">
+            <ion-label>{{ enlace.texto }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-list-header><ion-label>Catálogos y ejemplos</ion-label></ion-list-header>
+        <ion-menu-toggle *ngFor="let catalogo of catalogos" autoHide="false">
+          <ion-item [routerLink]="['/tabs/catalogos', catalogo.ruta]" routerDirection="root" button detail="false">
+            <ion-icon slot="start" [name]="catalogo.icono" aria-hidden="true"></ion-icon>
+            <ion-label>{{ catalogo.titulo }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-list-header><ion-label>Módulos del Sistema</ion-label></ion-list-header>
+        <ion-menu-toggle *ngFor="let tabla of tablasOriginales" autoHide="false">
+          <ion-item [routerLink]="tabla.ruta" routerDirection="root" button detail="false">
+            <ion-label>{{ tabla.texto }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle *ngIf="auth.activa()">
+          <ion-item button (click)="salir()" detail="false">
+            <ion-icon slot="start" name="log-out-outline" color="danger"></ion-icon>
+            <ion-label color="danger">Cerrar sesión</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main"></ion-router-outlet>
+</ion-app>

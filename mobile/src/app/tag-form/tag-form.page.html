@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEdit ? 'Editar Etiqueta' : 'Nueva Etiqueta' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando información de la etiqueta...</p>
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="tagForm" (ngSubmit)="saveTag()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Palabra Clave (Keyword) *</ion-label>
+        <ion-input
+          type="text"
+          formControlName="keyword"
+          placeholder="Ej. Aniversario, Playa, Cita"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('keyword')" class="validation-error">
+        {{ getError('keyword') }}
+      </div>
+    </ion-list>
+
+    <div class="ion-margin-top">
+      <ion-button expand="block" type="submit" [disabled]="saving">
+        <ion-spinner *ngIf="saving" name="crescent" slot="start"></ion-spinner>
+        {{ isEdit ? 'Actualizar Etiqueta' : 'Guardar Etiqueta' }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

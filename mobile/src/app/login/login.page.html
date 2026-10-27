@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="personalizado">
+    <ion-title>Iniciar sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form" (ngSubmit)="ingresar()">
+    <ion-input
+      label="Correo"
+      labelPlacement="stacked"
+      type="email"
+      autocomplete="username"
+      formControlName="email"
+      placeholder="correo@ejemplo.com"
+    ></ion-input>
+
+    <ion-input
+      label="Contraseña"
+      labelPlacement="stacked"
+      type="password"
+      autocomplete="current-password"
+      formControlName="password"
+      placeholder="********"
+    ></ion-input>
+
+    <ion-note color="danger" *ngIf="form.touched && form.invalid">
+      Escribe un correo válido y tu contraseña.
+    </ion-note>
+
+    <p *ngIf="mensaje" role="status" class="ion-text-danger">{{ mensaje }}</p>
+
+    <ion-button
+      fill="solid"
+      color="personalizado"
+      expand="block"
+      type="submit"
+      [disabled]="enviando"
+      class="ion-margin-top"
+    >
+      {{ enviando ? 'Ingresando...' : 'Ingresar' }}
+    </ion-button>
+  </form>
+
+  <p class="ion-text-center ion-margin-top">
+    <a routerLink="/registro">¿No tienes cuenta? Crear cuenta</a>
+  </p>
+</ion-content>

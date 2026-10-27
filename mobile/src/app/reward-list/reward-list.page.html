@@ -1,0 +1,47 @@
+<app-toolbar nombre="Recompensas"></app-toolbar>
+
+<ion-content>
+  <div class="ion-text-end ion-padding-end ion-margin-top">
+    <ion-button color="primary" (click)="newReward()">
+      <ion-icon name="add" slot="start"></ion-icon>
+      Nueva Recompensa
+    </ion-button>
+  </div>
+
+    <ion-searchbar [value]="busqueda" [debounce]="300" (ionInput)="handleInput($event)" placeholder="Buscar recompensas" aria-label="Buscar recompensas"></ion-searchbar>
+  <p class="ion-padding" *ngIf="total === 0">No se encontraron recompensas.</p>
+  <ion-list>
+    <ion-item-sliding *ngFor="let reward of rewards">
+      <ion-item>
+        <ion-label>
+          <h2>{{ reward.item_name }}</h2>
+          <p>Tipo: {{ reward.item_type }} | Costo: {{ reward.cost_xp }} XP | Rango: {{ reward.rank_ranid }}</p>
+        </ion-label>
+        <ion-note slot="end" color="primary">{{ reward.cost_xp }} XP</ion-note>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="warning" (click)="editReward(reward.rewid)">
+          <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="primary" [routerLink]="['/reward-view', reward.rewid]">
+          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="confirmarEliminar(reward.rewid, reward.item_name)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item *ngIf="rewards.length === 0">
+      <ion-label class="ion-text-center">No hay recompensas registradas.</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <app-paginacion
+    [total]="total"
+    [porPagina]="porPagina"
+    [paginaActual]="paginaActual"
+    (paginaCambio)="cambiarPagina($event)"
+  ></app-paginacion>
+</ion-content>

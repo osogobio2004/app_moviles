@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/token-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle de Token</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text color="danger" *ngIf="errorMessage">
+    <p class="ion-padding">{{ errorMessage }}</p>
+  </ion-text>
+
+  <ion-card *ngIf="token as detail">
+    <div class="code-badge">
+      <strong>{{ detail.code }}</strong>
+    </div>
+
+    <ion-card-header>
+      <ion-card-title>
+        Token #{{ detail.tokid }}
+      </ion-card-title>
+      <ion-card-subtitle>
+        Estado: {{ detail.is_used ? 'Canjeado / Usado ✅' : 'Disponible ⏳' }}
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <p>ID Token</p>
+            <h2>#{{ detail.tokid }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>ID Pareja (couidfk)</p>
+            <h2>#{{ detail.couidfk }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>Fecha Creación</p>
+            <h2>{{ detail.created_at | date:'yyyy-MM-dd HH:mm' }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>Fecha Expiración</p>
+            <h2>{{ detail.expires_at | date:'yyyy-MM-dd HH:mm' }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>Utilizado</p>
+            <h2>{{ detail.is_used ? 'Sí' : 'No' }}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,47 @@
+<app-toolbar nombre="Logros"></app-toolbar>
+
+<ion-content>
+  <div class="ion-text-end ion-padding-end ion-margin-top">
+    <ion-button color="primary" (click)="newAchievement()">
+      <ion-icon name="add" slot="start"></ion-icon>
+      Nuevo Logro
+    </ion-button>
+  </div>
+
+    <ion-searchbar [value]="busqueda" [debounce]="300" (ionInput)="handleInput($event)" placeholder="Buscar logros" aria-label="Buscar logros"></ion-searchbar>
+  <p class="ion-padding" *ngIf="total === 0">No se encontraron logros.</p>
+  <ion-list>
+    <ion-item-sliding *ngFor="let ach of achievements">
+      <ion-item>
+        <ion-label>
+          <h2>{{ ach.name }}</h2>
+          <p>ID: #{{ ach.achid }} | Bono: +{{ ach.xp_bonus }} XP</p>
+        </ion-label>
+        <ion-badge slot="end" color="success">+{{ ach.xp_bonus }} XP</ion-badge>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="warning" (click)="editAchievement(ach.achid)">
+          <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="primary" [routerLink]="['/achievement-view', ach.achid]">
+          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="confirmarEliminar(ach.achid, ach.name)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item *ngIf="achievements.length === 0">
+      <ion-label class="ion-text-center">No hay logros registrados.</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <app-paginacion
+    [total]="total"
+    [porPagina]="porPagina"
+    [paginaActual]="paginaActual"
+    (paginaCambio)="cambiarPagina($event)"
+  ></app-paginacion>
+</ion-content>

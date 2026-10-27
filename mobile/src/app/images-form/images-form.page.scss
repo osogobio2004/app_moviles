@@ -1,0 +1,26 @@
+.validation-error {
+  color: var(--ion-color-danger);
+  font-size: 0.85rem;
+  padding: 4px 16px 0 16px;
+}
+
+.file-picker-section {
+  padding: 8px 16px;
+  background: var(--ion-color-step-50, #f8f9fa);
+  border-radius: 8px;
+}
+
+.imagen-preview {
+  display: block;
+  max-width: 100%;
+  width: 260px;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  margin: 12px auto;
+}
+
+input[type="file"] {
+  max-width: 100%;
+}

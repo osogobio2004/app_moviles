@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/label-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle de Asignación</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text color="danger" *ngIf="errorMessage">
+    <p class="ion-padding">{{ errorMessage }}</p>
+  </ion-text>
+
+  <ion-card *ngIf="label as detail">
+    <ion-card-header>
+      <ion-card-title>
+        🏷️ Asignación #{{ detail.labid }}
+      </ion-card-title>
+      <ion-card-subtitle>
+        Fecha: {{ detail.assigment_at | date:'yyyy-MM-dd HH:mm' }}
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <p>ID Asignación</p>
+            <h2>#{{ detail.labid }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>ID del Recuerdo (memidfk)</p>
+            <h2>#{{ detail.memidfk }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>ID de la Etiqueta (tagidfk)</p>
+            <h2>#{{ detail.tagidfk }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>Fecha Asignación</p>
+            <h2>{{ detail.assigment_at | date:'yyyy-MM-dd HH:mm:ss' }}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

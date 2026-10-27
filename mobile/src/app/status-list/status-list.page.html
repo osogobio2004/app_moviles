@@ -1,0 +1,49 @@
+<app-toolbar nombre="Estados"></app-toolbar>
+
+<ion-content>
+  <div class="ion-text-end ion-padding-end ion-margin-top">
+    <ion-button color="primary" (click)="newStatus()">
+      <ion-icon name="add" slot="start"></ion-icon>
+      Nuevo Estado
+    </ion-button>
+  </div>
+
+    <ion-searchbar [value]="busqueda" [debounce]="300" (ionInput)="handleInput($event)" placeholder="Buscar estados" aria-label="Buscar estados"></ion-searchbar>
+  <p class="ion-padding" *ngIf="total === 0">No se encontraron estados.</p>
+  <ion-list>
+    <ion-item-sliding *ngFor="let s of statuses">
+      <ion-item>
+        <ion-label>
+          <h2>{{ s.description }}</h2>
+          <p>ID: #{{ s.staid }}</p>
+        </ion-label>
+        <ion-badge slot="end" [color]="s.description === 'COMPLETADO' ? 'success' : (s.description === 'EN PROGRESO' ? 'warning' : 'medium')">
+          {{ s.description }}
+        </ion-badge>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="warning" (click)="editStatus(s.staid)">
+          <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="primary" [routerLink]="['/status-view', s.staid]">
+          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="confirmarEliminar(s.staid, s.description)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item *ngIf="statuses.length === 0">
+      <ion-label class="ion-text-center">No hay estados registrados.</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <app-paginacion
+    [total]="total"
+    [porPagina]="porPagina"
+    [paginaActual]="paginaActual"
+    (paginaCambio)="cambiarPagina($event)"
+  ></app-paginacion>
+</ion-content>

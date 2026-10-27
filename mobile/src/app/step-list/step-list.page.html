@@ -1,0 +1,54 @@
+<app-toolbar nombre="Pasos"></app-toolbar>
+
+<ion-content>
+  <div class="ion-text-end ion-padding-end ion-margin-top">
+    <ion-button color="primary" (click)="newStep()">
+      <ion-icon name="add" slot="start"></ion-icon>
+      Nuevo Paso
+    </ion-button>
+  </div>
+
+    <ion-searchbar [value]="busqueda" [debounce]="300" (ionInput)="handleInput($event)" placeholder="Buscar pasos" aria-label="Buscar pasos"></ion-searchbar>
+  <p class="ion-padding" *ngIf="total === 0">No se encontraron pasos.</p>
+  <ion-list>
+    <ion-item-sliding *ngFor="let step of steps">
+      <ion-item>
+        <ion-icon
+          [name]="step.is_done ? 'checkmark-circle' : 'ellipse-outline'"
+          [color]="step.is_done ? 'success' : 'medium'"
+          slot="start"
+        ></ion-icon>
+        <ion-label>
+          <h2>{{ step.instruction }}</h2>
+          <p>Misión ID: {{ step.misidfk }} | Orden: #{{ step.order_num }}</p>
+        </ion-label>
+        <ion-badge slot="end" [color]="step.is_done ? 'success' : 'warning'">
+          {{ step.is_done ? 'Hecho' : 'Pendiente' }}
+        </ion-badge>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="warning" (click)="editStep(step.steid)">
+          <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="primary" [routerLink]="['/step-view', step.steid]">
+          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="confirmarEliminar(step.steid, step.instruction)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item *ngIf="steps.length === 0">
+      <ion-label class="ion-text-center">No hay pasos registrados.</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <app-paginacion
+    [total]="total"
+    [porPagina]="porPagina"
+    [paginaActual]="paginaActual"
+    (paginaCambio)="cambiarPagina($event)"
+  ></app-paginacion>
+</ion-content>

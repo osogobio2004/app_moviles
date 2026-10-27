@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/mission-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle de Misión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text color="danger" *ngIf="errorMessage">
+    <p class="ion-padding">{{ errorMessage }}</p>
+  </ion-text>
+
+  <ion-card *ngIf="mission as detail">
+    <ion-card-header>
+      <ion-card-title>{{ detail.title }}</ion-card-title>
+      <ion-card-subtitle>Misión #{{ detail.misid }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label class="ion-text-wrap">
+            <p>Detalles</p>
+            <h2>{{ detail.details || 'Sin detalles adicionales' }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="detail.catidfk">
+          <ion-label>
+            <p>Categoría</p>
+            <h2>{{ getCategoryName(detail.catidfk) }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="detail.staidfk">
+          <ion-label>
+            <p>Estado</p>
+            <h2>{{ getStatusDescription(detail.staidfk) }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>ID de Pareja</p>
+            <h2>{{ detail.couidfk }}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <p>Fecha límite</p>
+            <h2 *ngIf="detail.deadline; else noDate">
+              {{ detail.deadline | date:'yyyy-MM-dd HH:mm' }}
+            </h2>
+            <ng-template #noDate>
+              <h2>Sin fecha límite establecida</h2>
+            </ng-template>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

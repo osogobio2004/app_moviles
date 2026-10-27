@@ -1,0 +1,35 @@
+<ion-header><ion-toolbar color="personalizado">
+  <ion-buttons slot="start"><ion-menu-button></ion-menu-button></ion-buttons>
+  <ion-title>Productos</ion-title>
+  <ion-buttons slot="end">
+    <ion-button fill="solid" [routerLink]="['/tabs/productos/formulario']" aria-label="Nuevo producto">
+      <ion-icon slot="icon-only" name="add"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar></ion-header>
+
+<ion-content>
+  <ion-searchbar [value]="busqueda" [debounce]="300" (ionInput)="handleInput($event)" placeholder="Buscar productos" aria-label="Buscar productos"></ion-searchbar>
+  <p class="ion-padding" *ngIf="total === 0">No se encontraron productos.</p>
+  <ion-list>
+    <ion-item *ngFor="let producto of productos">
+      <ion-label class="ion-text-wrap">
+        <h2>{{ producto.nombre }}</h2>
+        <p>{{ producto.descripcion }}</p>
+        <p>Precio: ${{ producto.precio }}</p>
+        <p>Stock: {{ producto.stock }}</p>
+        <p>Registro: {{ producto.fecha_registro | date:'yyyy-MM-dd' }}</p>
+      </ion-label>
+      <ion-button fill="solid" slot="end" [routerLink]="['/tabs/productos/detalle', producto.id]" aria-label="Ver detalle">
+        <ion-icon slot="icon-only" name="eye"></ion-icon>
+      </ion-button>
+      <ion-button fill="solid" color="warning" [routerLink]="['/tabs/productos/formulario', producto.id]" aria-label="Editar producto">
+        <ion-icon slot="icon-only" name="pencil"></ion-icon>
+      </ion-button>
+      <ion-button fill="solid" color="danger" (click)="confirmarEliminar(producto.id, producto.nombre)" aria-label="Eliminar producto">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  <app-paginacion [total]="total" [porPagina]="porPagina" [paginaActual]="paginaActual" [maxPaginasVisibles]="5" (paginaCambio)="cambiarPagina($event)"></app-paginacion>
+</ion-content>

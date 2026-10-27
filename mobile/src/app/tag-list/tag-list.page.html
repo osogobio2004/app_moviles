@@ -1,0 +1,47 @@
+<app-toolbar nombre="Etiquetas"></app-toolbar>
+
+<ion-content>
+  <div class="ion-text-end ion-padding-end ion-margin-top">
+    <ion-button color="primary" (click)="newTag()">
+      <ion-icon name="add" slot="start"></ion-icon>
+      Nueva Etiqueta
+    </ion-button>
+  </div>
+
+    <ion-searchbar [value]="busqueda" [debounce]="300" (ionInput)="handleInput($event)" placeholder="Buscar etiquetas" aria-label="Buscar etiquetas"></ion-searchbar>
+  <p class="ion-padding" *ngIf="total === 0">No se encontraron etiquetas.</p>
+  <ion-list>
+    <ion-item-sliding *ngFor="let tag of tags">
+      <ion-item>
+        <ion-icon name="pricetag-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h2>{{ tag.keyword }}</h2>
+          <p>ID: #{{ tag.tagid }}</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="warning" (click)="editTag(tag.tagid)">
+          <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="primary" [routerLink]="['/tag-view', tag.tagid]">
+          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="confirmarEliminar(tag.tagid, tag.keyword)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item *ngIf="tags.length === 0">
+      <ion-label class="ion-text-center">No hay etiquetas registradas.</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <app-paginacion
+    [total]="total"
+    [porPagina]="porPagina"
+    [paginaActual]="paginaActual"
+    (paginaCambio)="cambiarPagina($event)"
+  ></app-paginacion>
+</ion-content>

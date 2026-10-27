@@ -1,0 +1,47 @@
+<app-toolbar nombre="Misiones"></app-toolbar>
+
+<ion-content>
+  <ion-searchbar [value]="busqueda" [debounce]="300" (ionInput)="handleInput($event)" placeholder="Buscar misiones" aria-label="Buscar misiones"></ion-searchbar>
+    <p class="ion-padding" *ngIf="total === 0">No se encontraron misiones.</p>
+  <ion-list>
+    <ion-item *ngFor="let mission of missions">
+      <ion-label class="ion-text-wrap">
+        <h2>{{ mission.title }}</h2>
+        <p *ngIf="mission.details">{{ mission.details }}</p>
+        <p><strong>Fecha límite:</strong> {{ mission.deadline | date:'yyyy-MM-dd HH:mm' }}</p>
+        <p *ngIf="mission.catidfk">
+          <strong>Categoría:</strong> {{ getCategoryName(mission.catidfk) }}
+        </p>
+        <p *ngIf="mission.staidfk">
+          <strong>Estado:</strong> {{ getStatusDescription(mission.staidfk) }}
+        </p>
+      </ion-label>
+
+      <ion-button fill="clear" color="warning" (click)="editMission(mission.misid)" title="Editar">
+        <ion-icon slot="icon-only" name="pencil"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" color="primary" [routerLink]="['/mission-view', mission.misid]" title="Ver detalle">
+        <ion-icon slot="icon-only" name="eye"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" color="danger" (click)="confirmarEliminar(mission.misid, mission.title)" title="Eliminar">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <app-paginacion
+    [total]="total"
+    [porPagina]="porPagina"
+    [paginaActual]="paginaActual"
+    [maxPaginasVisibles]="5"
+    (paginaCambio)="cambiarPagina($event)"
+  ></app-paginacion>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="center">
+    <ion-fab-button (click)="newMission()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

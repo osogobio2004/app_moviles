@@ -1,0 +1,54 @@
+<app-toolbar nombre="Inventario"></app-toolbar>
+
+<ion-content>
+  <div class="ion-text-end ion-padding-end ion-margin-top">
+    <ion-button color="primary" (click)="newInventory()">
+      <ion-icon name="add" slot="start"></ion-icon>
+      Nuevo Ítem
+    </ion-button>
+  </div>
+
+    <ion-searchbar [value]="busqueda" [debounce]="300" (ionInput)="handleInput($event)" placeholder="Buscar inventario" aria-label="Buscar inventario"></ion-searchbar>
+  <p class="ion-padding" *ngIf="total === 0">No se encontraron inventario.</p>
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of items">
+      <ion-item>
+        <ion-icon
+          [name]="item.is_equipped ? 'shield-checkmark' : 'briefcase-outline'"
+          [color]="item.is_equipped ? 'success' : 'medium'"
+          slot="start"
+        ></ion-icon>
+        <ion-label>
+          <h2>Recompensa #{{ item.rewidfk }} (Pareja #{{ item.couidfk }})</h2>
+          <p>Adquirido: {{ item.acquired_at | date:'yyyy-MM-dd HH:mm' }} | ID: #{{ item.invid }}</p>
+        </ion-label>
+        <ion-badge slot="end" [color]="item.is_equipped ? 'success' : 'medium'">
+          {{ item.is_equipped ? 'Equipado' : 'Guardado' }}
+        </ion-badge>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="warning" (click)="editInventory(item.invid)">
+          <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="primary" [routerLink]="['/inventory-view', item.invid]">
+          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="confirmarEliminar(item.invid)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item *ngIf="items.length === 0">
+      <ion-label class="ion-text-center">No hay ítems en el inventario.</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <app-paginacion
+    [total]="total"
+    [porPagina]="porPagina"
+    [paginaActual]="paginaActual"
+    (paginaCambio)="cambiarPagina($event)"
+  ></app-paginacion>
+</ion-content>

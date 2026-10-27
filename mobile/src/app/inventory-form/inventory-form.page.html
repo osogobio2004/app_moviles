@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEdit ? 'Editar Ítem de Inventario' : 'Nuevo Ítem a Inventario' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando información del inventario...</p>
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="inventoryForm" (ngSubmit)="saveInventory()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Fecha de Adquisición *</ion-label>
+        <ion-input
+          type="datetime-local"
+          formControlName="acquired_at"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('acquired_at')" class="validation-error">
+        {{ getError('acquired_at') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">ID Pareja (couidfk) *</ion-label>
+        <ion-input
+          type="number"
+          formControlName="couidfk"
+          placeholder="1"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('couidfk')" class="validation-error">
+        {{ getError('couidfk') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">ID Recompensa (rewidfk) *</ion-label>
+        <ion-input
+          type="number"
+          formControlName="rewidfk"
+          placeholder="1"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('rewidfk')" class="validation-error">
+        {{ getError('rewidfk') }}
+      </div>
+
+      <ion-item>
+        <ion-label>Equipado actualmente</ion-label>
+        <ion-toggle formControlName="is_equipped"></ion-toggle>
+      </ion-item>
+    </ion-list>
+
+    <div class="ion-margin-top">
+      <ion-button expand="block" type="submit" [disabled]="saving">
+        <ion-spinner *ngIf="saving" name="crescent" slot="start"></ion-spinner>
+        {{ isEdit ? 'Actualizar Ítem' : 'Guardar en Inventario' }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

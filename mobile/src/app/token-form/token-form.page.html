@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEdit ? 'Editar Token' : 'Nuevo Token' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando información del token...</p>
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="tokenForm" (ngSubmit)="saveToken()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Código de Vinculación (Máx 8 caracteres) *</ion-label>
+        <ion-input
+          type="text"
+          formControlName="code"
+          placeholder="Ej. AB12CD34"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('code')" class="validation-error">
+        {{ getError('code') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">Fecha de Creación *</ion-label>
+        <ion-input
+          type="datetime-local"
+          formControlName="created_at"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('created_at')" class="validation-error">
+        {{ getError('created_at') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">Fecha de Expiración *</ion-label>
+        <ion-input
+          type="datetime-local"
+          formControlName="expires_at"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('expires_at')" class="validation-error">
+        {{ getError('expires_at') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">ID de Pareja (couidfk) *</ion-label>
+        <ion-input
+          type="number"
+          formControlName="couidfk"
+          placeholder="1"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('couidfk')" class="validation-error">
+        {{ getError('couidfk') }}
+      </div>
+
+      <ion-item>
+        <ion-label>¿Ya fue utilizado?</ion-label>
+        <ion-toggle formControlName="is_used"></ion-toggle>
+      </ion-item>
+    </ion-list>
+
+    <div class="ion-margin-top">
+      <ion-button expand="block" type="submit" [disabled]="saving">
+        <ion-spinner *ngIf="saving" name="crescent" slot="start"></ion-spinner>
+        {{ isEdit ? 'Actualizar Token' : 'Generar Token' }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

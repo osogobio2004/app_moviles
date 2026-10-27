@@ -1,0 +1,50 @@
+<app-toolbar nombre="Rangos"></app-toolbar>
+
+<ion-content>
+  <div class="ion-text-end ion-padding-end ion-margin-top">
+    <ion-button color="primary" (click)="newRank()">
+      <ion-icon name="add" slot="start"></ion-icon>
+      Nuevo Rango
+    </ion-button>
+  </div>
+
+    <ion-searchbar [value]="busqueda" [debounce]="300" (ionInput)="handleInput($event)" placeholder="Buscar rangos" aria-label="Buscar rangos"></ion-searchbar>
+  <p class="ion-padding" *ngIf="total === 0">No se encontraron rangos.</p>
+  <ion-list>
+    <ion-item-sliding *ngFor="let rank of ranks">
+      <ion-item>
+        <div slot="start" *ngIf="rank.badge_icon" style="font-size: 1.5rem;">
+          {{ rank.badge_icon }}
+        </div>
+        <ion-label>
+          <h2>{{ getRankTitle(rank) }}</h2>
+          <p>Mínimo: {{ rank.min_xp }} XP | ID: #{{ rank.ranid }}</p>
+        </ion-label>
+        <ion-badge slot="end" color="tertiary">{{ rank.min_xp }} XP</ion-badge>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="warning" (click)="editRank(rank.ranid)">
+          <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="primary" [routerLink]="['/rank-view', rank.ranid]">
+          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="confirmarEliminar(rank.ranid, getRankTitle(rank))">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item *ngIf="ranks.length === 0">
+      <ion-label class="ion-text-center">No hay rangos registrados.</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <app-paginacion
+    [total]="total"
+    [porPagina]="porPagina"
+    [paginaActual]="paginaActual"
+    (paginaCambio)="cambiarPagina($event)"
+  ></app-paginacion>
+</ion-content>

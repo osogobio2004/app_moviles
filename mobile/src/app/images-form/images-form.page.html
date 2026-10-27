@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEdit ? 'Editar Imagen' : 'Nueva Imagen' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando información de la imagen...</p>
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="imagesForm" (ngSubmit)="saveImage()">
+    <ion-list>
+      <section class="file-picker-section ion-margin-bottom">
+        <h2 style="font-size: 1rem; font-weight: 600; margin-bottom: 4px;">Archivo de Imagen</h2>
+        <label for="imagen-archivo" style="font-size: 0.85rem; color: var(--ion-color-step-600, #666); display: block; margin-bottom: 6px;">
+          Selecciona una imagen desde tu dispositivo:
+        </label>
+        <input id="imagen-archivo" type="file" accept="image/*" (change)="onImagenSeleccionada($event)" [disabled]="saving">
+        <p *ngIf="isEdit" style="font-size: 0.8rem; color: var(--ion-color-step-500, #777); margin-top: 4px;">
+          Si no seleccionas otra imagen, se conservará la actual.
+        </p>
+        <p *ngIf="mensajeImagen" role="status" style="color: var(--ion-color-danger, #eb445a); font-size: 0.85rem;">
+          {{ mensajeImagen }}
+        </p>
+        <img *ngIf="imagenUrl" [src]="imagenUrl" alt="Vista previa de la imagen" class="imagen-preview">
+      </section>
+
+      <ion-item>
+        <ion-label position="stacked">O ingresa URL directa (opcional si subes archivo)</ion-label>
+        <ion-input
+          type="text"
+          formControlName="url"
+          placeholder="https://example.com/foto.jpg"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Fecha de la Fotografía</ion-label>
+        <ion-input
+          type="date"
+          formControlName="date"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">ID del Recuerdo Asociado (memidfk) *</ion-label>
+        <ion-input
+          type="number"
+          formControlName="memidfk"
+          placeholder="1"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('memidfk')" class="validation-error" style="color: var(--ion-color-danger, #eb445a); padding: 4px 16px; font-size: 0.85rem;">
+        {{ getError('memidfk') }}
+      </div>
+    </ion-list>
+
+    <div class="ion-margin-top">
+      <ion-button expand="block" type="submit" [disabled]="saving">
+        <ion-spinner *ngIf="saving" name="crescent" slot="start"></ion-spinner>
+        {{ saving ? 'Guardando imagen...' : (isEdit ? 'Actualizar Imagen' : 'Guardar Imagen') }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

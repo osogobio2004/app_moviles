@@ -1,0 +1,41 @@
+<app-toolbar nombre="Recuerdos"></app-toolbar>
+
+<ion-content>
+    <ion-searchbar [value]="busqueda" [debounce]="300" (ionInput)="handleInput($event)" placeholder="Buscar recuerdos" aria-label="Buscar recuerdos"></ion-searchbar>
+  <p class="ion-padding" *ngIf="total === 0">No se encontraron recuerdos.</p>
+  <ion-list>
+    <ion-item *ngFor="let memory of memories">
+      <ion-label class="ion-text-wrap">
+        <h2>{{ memory.favorite ? '⭐ ' : '' }}{{ memory.note }}</h2>
+        <p><strong>Fecha:</strong> {{ memory.captured_at | date:'yyyy-MM-dd HH:mm' }}</p>
+        <p *ngIf="memory.favorite"><ion-badge color="warning">Favorito</ion-badge></p>
+      </ion-label>
+
+      <ion-button fill="clear" color="warning" (click)="editMemory(memory.memid)" title="Editar">
+        <ion-icon slot="icon-only" name="pencil"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" color="primary" [routerLink]="['/memory-view', memory.memid]" title="Ver detalle">
+        <ion-icon slot="icon-only" name="eye"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" color="danger" (click)="confirmarEliminar(memory.memid, memory.note)" title="Eliminar">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <app-paginacion
+    [total]="total"
+    [porPagina]="porPagina"
+    [paginaActual]="paginaActual"
+    [maxPaginasVisibles]="5"
+    (paginaCambio)="cambiarPagina($event)"
+  ></app-paginacion>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="center">
+    <ion-fab-button (click)="newMemory()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

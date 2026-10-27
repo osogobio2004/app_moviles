@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        Cancelar
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      {{ isEdit ? 'Editar Recuerdo' : 'Nuevo Recuerdo' }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner></ion-spinner>
+    <p>Cargando información del recuerdo...</p>
+  </div>
+
+  <form *ngIf="memoryForm && !loading" [formGroup]="memoryForm" (ngSubmit)="saveMemory()">
+    <ion-list>
+      <ion-item>
+        <ion-textarea
+          label="Nota / Recuerdo"
+          labelPlacement="stacked"
+          formControlName="note"
+          autoGrow="true"
+          rows="3"
+          placeholder="Escribe lo que ocurrió en este momento especial..."
+        ></ion-textarea>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('note') as error">
+        {{ error }}
+      </ion-note>
+
+      <ion-item>
+        <ion-input
+          label="Fecha y hora del recuerdo"
+          labelPlacement="stacked"
+          type="datetime-local"
+          formControlName="captured_at"
+        ></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('captured_at') as error">
+        {{ error }}
+      </ion-note>
+
+      <ion-item>
+        <ion-checkbox formControlName="favorite" justify="space-between">
+          Marcar como favorito ⭐
+        </ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          label="ID de Pareja"
+          labelPlacement="stacked"
+          type="number"
+          formControlName="couidfk"
+          min="1"
+        ></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="getError('couidfk') as error">
+        {{ error }}
+      </ion-note>
+    </ion-list>
+
+    <section class="ion-margin-top ion-padding-top">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <h2 style="font-size: 1.1rem; font-weight: 600; margin: 0;">Etiquetas (M:N)</h2>
+        <ion-button fill="solid" size="small" type="button" (click)="agregarTag()" aria-label="Agregar etiqueta">
+          <ion-icon slot="start" name="add"></ion-icon>
+          Agregar
+        </ion-button>
+      </div>
+
+      <p *ngIf="mensajeTags" role="status" style="color: var(--ion-color-danger, #eb445a); font-size: 0.85rem;">
+        {{ mensajeTags }}
+      </p>
+
+      <div formArrayName="tags">
+        <p *ngIf="tagsFA.controls.length === 0" style="color: var(--ion-color-step-600, #888); font-size: 0.85rem; font-style: italic; margin: 8px 0;">
+          Sin etiquetas agregadas. Pulsa "+ Agregar" para asociar una o varias etiquetas.
+        </p>
+        <ion-item *ngFor="let control of tagsFA.controls; let i = index" lines="full">
+          <ion-select label="Etiqueta" labelPlacement="stacked" [formControlName]="i" interface="popover" placeholder="Selecciona etiqueta">
+            <ion-select-option *ngFor="let t of tagsDisponibles" [value]="t.tagid">
+              {{ t.keyword }}
+            </ion-select-option>
+          </ion-select>
+          <ion-button fill="clear" color="danger" slot="end" type="button" (click)="eliminarTag(i)" aria-label="Quitar etiqueta">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </div>
+    </section>
+
+    <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="saving || loading">
+      {{ saving ? 'Guardando...' : (isEdit ? 'Actualizar Recuerdo' : 'Guardar Recuerdo') }}
+    </ion-button>
+  </form>
+</ion-content>

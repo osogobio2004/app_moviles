@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEdit ? 'Editar Paso' : 'Nuevo Paso' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando información del paso...</p>
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="stepForm" (ngSubmit)="saveStep()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Instrucción del Paso *</ion-label>
+        <ion-input
+          type="text"
+          formControlName="instruction"
+          placeholder="Ej. Comprar los boletos de avión"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('instruction')" class="validation-error">
+        {{ getError('instruction') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">Número de Orden *</ion-label>
+        <ion-input
+          type="number"
+          formControlName="order_num"
+          placeholder="1"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('order_num')" class="validation-error">
+        {{ getError('order_num') }}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">ID Misión Asociada (misidfk) *</ion-label>
+        <ion-input
+          type="number"
+          formControlName="misidfk"
+          placeholder="1"
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="getError('misidfk')" class="validation-error">
+        {{ getError('misidfk') }}
+      </div>
+
+      <ion-item>
+        <ion-label>Completado</ion-label>
+        <ion-toggle formControlName="is_done"></ion-toggle>
+      </ion-item>
+    </ion-list>
+
+    <div class="ion-margin-top">
+      <ion-button expand="block" type="submit" [disabled]="saving">
+        <ion-spinner *ngIf="saving" name="crescent" slot="start"></ion-spinner>
+        {{ isEdit ? 'Actualizar Paso' : 'Guardar Paso' }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>
